@@ -19,5 +19,34 @@ def reciprocal_rank_fusion(
     Returns:
         A single fused and ranked list of results.
     """
-    # TODO: implement
-    raise NotImplementedError("Reciprocal Rank Fusion is not yet implemented.")
+    rrf_scores: Dict[str, float] = {}
+    chunk_map: Dict[str, Dict[str, Any]] = {}
+    
+    # Process BM25 results
+    for rank, chunk in enumerate(bm25_results, start=1):
+        chunk_id = chunk["id"]
+        if chunk_id not in chunk_map:
+            chunk_map[chunk_id] = chunk.copy()
+            rrf_scores[chunk_id] = 0.0
+            
+        rrf_scores[chunk_id] += 1.0 / (k + rank)
+        
+    # Process Vector results
+    for rank, chunk in enumerate(vector_results, start=1):
+        chunk_id = chunk["id"]
+        if chunk_id not in chunk_map:
+            chunk_map[chunk_id] = chunk.copy()
+            rrf_scores[chunk_id] = 0.0
+            
+        rrf_scores[chunk_id] += 1.0 / (k + rank)
+        
+    # Sort by fused score
+    fused_results = []
+    for chunk_id, score in sorted(rrf_scores.items(), key=lambda x: x[1], reverse=True):
+        fused_chunk = chunk_map[chunk_id]
+        fused_chunk["fusion_score"] = score
+        # Optionally remove the individual scores to keep it clean
+        fused_chunk.pop("score", None) 
+        fused_results.append(fused_chunk)
+        
+    return fused_results
