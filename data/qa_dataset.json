@@ -1,0 +1,14 @@
+[
+    {
+        "query": "How is SYCON-Bench used to measure sycophancy?",
+        "relevant_ids": ["c0a8f831eefc4a16b9b324ceb0de7d8d", "b588c83a73ff4af4be8f18d79905c93c"]
+    },
+    {
+        "query": "What is the difference between explicit sycophancy and implicit conversational pressure?",
+        "relevant_ids": ["1c062db20005470b99f36f3db5de6cbe", "770a3174dfb54b008d5113d0c950ab9c"]
+    },
+    {
+        "query": "What models are evaluated in this study?",
+        "relevant_ids": ["d608316c0211463e8a4a58b29f796695", "41525301824a49c6aecc88cfd388be7d"]
+    }
+]
