@@ -68,38 +68,46 @@ pip install -r requirements.txt
 
 ---
 
-## How to Run (Step-by-Step)
+## How to Run
 
-### Step 1 — Parse the PDF (M1)
-Place your research paper PDF inside the `data/papers/` folder, then run:
-```powershell
-.\venv\Scripts\python.exe parsing\parse_pdf.py
-```
-**What it does:** Uses Docling to extract text, tables, and figures from the PDF. Saves structured chunks to `data/processed/chunks.json` and cropped images to `data/processed/images/`.
-
-### Step 2 — Test Retrieval (M2) *(optional)*
-```powershell
-.\venv\Scripts\python.exe retrieval\test_retrieval.py
-```
-**What it does:** Indexes all chunks into BM25 and ChromaDB, runs a sample query, and prints the top results from BM25, Vector Search, and Hybrid Fusion side by side. Use this to verify the retrieval pipeline is working correctly.
-
-### Step 3 — Test Generation (M3) *(optional)*
-```powershell
-.\venv\Scripts\python.exe multimodal\test_generation.py
-```
-**What it does:** Runs the full RAG pipeline end-to-end in the terminal. It retrieves relevant chunks, links any referenced figures/tables, and sends everything (text + images) to the Gemini API. Prints the final LLM-generated answer with citations.
-
-### Step 4 — Run Evaluation Experiments (M4) *(optional)*
-```powershell
-.\venv\Scripts\python.exe eval\run_experiments.py
-```
-**What it does:** Runs a suite of test queries through BM25 Only, Vector Only, and Hybrid Fusion, and compares them using Recall@5 and MRR metrics. Outputs a table proving that Hybrid Fusion outperforms standalone methods.
-
-### Step 5 — Launch the Streamlit Demo UI (M4)
+### Quick Start — Launch the Demo UI
 ```powershell
 .\venv\Scripts\streamlit.exe run app\streamlit_app.py
 ```
-**What it does:** Opens an interactive web app in your browser (usually at `http://localhost:8501`). You can type questions about the paper and see the multimodal answer alongside the retrieved text chunks and images.
+This opens a web app at `http://localhost:8501`. From there:
+1. **Upload** any research paper PDF using the sidebar
+2. **Watch** the pipeline process the paper in real-time (parsing → indexing → evaluation)
+3. **Chat** with the paper — ask questions and view the multimodal answer with retrieved evidence
+
+> **Note:** The app handles everything automatically — no need to run any scripts beforehand. You can upload different papers and the system resets cleanly each time.
+
+---
+
+### Developer Tools *(optional, for testing individual modules)*
+
+#### Parse a PDF manually (M1)
+```powershell
+.\venv\Scripts\python.exe parsing\parse_pdf.py
+```
+Uses Docling to extract text, tables, and figures. Saves chunks to `data/processed/chunks.json` and images to `data/processed/images/`.
+
+#### Test Retrieval (M2)
+```powershell
+.\venv\Scripts\python.exe retrieval\test_retrieval.py
+```
+Indexes chunks and runs a sample query through BM25, Vector Search, and Hybrid Fusion side by side.
+
+#### Test Generation (M3)
+```powershell
+.\venv\Scripts\python.exe multimodal\test_generation.py
+```
+Runs the full RAG pipeline in the terminal: retrieves chunks, links figures, and generates a Gemini-powered answer.
+
+#### Run Evaluation Experiments (M4)
+```powershell
+.\venv\Scripts\python.exe eval\run_experiments.py
+```
+Compares BM25 Only vs Vector Only vs Hybrid Fusion using Recall@5 and MRR metrics.
 
 ---
 
