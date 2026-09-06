@@ -1,14 +1,802 @@
 [
-    {
-        "query": "How is SYCON-Bench used to measure sycophancy?",
-        "relevant_ids": ["c0a8f831eefc4a16b9b324ceb0de7d8d", "b588c83a73ff4af4be8f18d79905c93c"]
-    },
-    {
-        "query": "What is the difference between explicit sycophancy and implicit conversational pressure?",
-        "relevant_ids": ["1c062db20005470b99f36f3db5de6cbe", "770a3174dfb54b008d5113d0c950ab9c"]
-    },
-    {
-        "query": "What models are evaluated in this study?",
-        "relevant_ids": ["d608316c0211463e8a4a58b29f796695", "41525301824a49c6aecc88cfd388be7d"]
-    }
+  {
+    "query": "What is the 6-bit binary Braille representation mapped to the Bengali Unicode character \"ই\" in the proposed translation matrix?",
+    "relevant_ids": [
+      "e16197e1a8c4d9777e1d9672c52dff7c"
+    ],
+    "source_type": "table",
+    "source_section": "A. Tactile-to-Grapheme Mapping Mechanism"
+  },
+  {
+    "query": "Which Bengali Unicode character corresponds to the 6-bit binary Braille code \"101100\" in this mapping system?",
+    "relevant_ids": [
+      "e16197e1a8c4d9777e1d9672c52dff7c"
+    ],
+    "source_type": "table",
+    "source_section": "A. Tactile-to-Grapheme Mapping Mechanism"
+  },
+  {
+    "query": "What is the inference speed of the optimal (reference) iteration of the YOLO v11 model as evaluated in the training performance table?",
+    "relevant_ids": [
+      "6a698325bc91c53330af5a8fd08c8b13"
+    ],
+    "source_type": "table",
+    "source_section": "For YOLOv11s:"
+  },
+  {
+    "query": "How does the box loss of the first iteration of the YOLO v8 model compare to that of the first iteration of the YOLO v11 model?",
+    "relevant_ids": [
+      "6a698325bc91c53330af5a8fd08c8b13"
+    ],
+    "source_type": "table",
+    "source_section": "For YOLOv11s:"
+  },
+  {
+    "query": "According to existing literature, which two languages currently possess a complete Braille-to-speech conversion pipeline?",
+    "relevant_ids": [
+      "07601f2b3d178048636a64db6894201f"
+    ],
+    "source_type": "text",
+    "source_section": "II. LITERATURE REVIEW"
+  },
+  {
+    "query": "What specific linguistic limitations prevent standard Text-to-Speech engines from effectively serving the Bengali language?",
+    "relevant_ids": [
+      "07601f2b3d178048636a64db6894201f"
+    ],
+    "source_type": "text",
+    "source_section": "II. LITERATURE REVIEW"
+  },
+  {
+    "query": "Approximately how many visually impaired individuals reside in Bangladesh and West Bengal combined, according to the cited epidemiological data?",
+    "relevant_ids": [
+      "5fbd92164ba8105e46f0c71fc6eae29c"
+    ],
+    "source_type": "text",
+    "source_section": "I. INTRODUCTION"
+  },
+  {
+    "query": "What percentage of the regional population in West Bengal, India, is affected by blindness or visual impairments?",
+    "relevant_ids": [
+      "5fbd92164ba8105e46f0c71fc6eae29c"
+    ],
+    "source_type": "text",
+    "source_section": "I. INTRODUCTION"
+  },
+  {
+    "query": "Why do traditional pixel-level segmentation architectures like U-Net struggle to accurately group isolated tactile dots into standard six-dot configurations?",
+    "relevant_ids": [
+      "94279a6d2dc72a1bca666422e3f1c25e"
+    ],
+    "source_type": "text",
+    "source_section": "I. INTRODUCTION"
+  },
+  {
+    "query": "What local character accuracy rate did the researchers observe when testing segmentation-first pipelines on noisy, non-standardized Bengali Braille media?",
+    "relevant_ids": [
+      "94279a6d2dc72a1bca666422e3f1c25e"
+    ],
+    "source_type": "text",
+    "source_section": "I. INTRODUCTION"
+  },
+  {
+    "query": "What is the total number of high-resolution images and approximate Braille instances contained in the custom dataset introduced for this Bengali Braille translation system?",
+    "relevant_ids": [
+      "8f246dfa1ff32cbaa484a0093e1122bd"
+    ],
+    "source_type": "text",
+    "source_section": "Beyond Bounding Boxes: A Unified YOLO pipeline for Bengali Braille Character to Bengali Voice Conversion System"
+  },
+  {
+    "query": "Why does the Llama 3 tokenizer fragment common Bengali words like \"Ami\" into isolated individual characters during processing?",
+    "relevant_ids": [
+      "2ea937128cd9dbb6b1c90cdb7cce9d34"
+    ],
+    "source_type": "text",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "Why did the researchers select the 'small' (s) variant of the YOLO models instead of the 'nano' or 'medium/large' options for their edge deployment?",
+    "relevant_ids": [
+      "5ea09dfa52afd07374e0f3a09cc28b3f"
+    ],
+    "source_type": "text",
+    "source_section": "B. Experimental Setup and Implementation Details"
+  },
+  {
+    "query": "What limitations prevented the wide adoption of Paul Blenkhorn's optical scanning system for reading embossed Braille text?",
+    "relevant_ids": [
+      "3ea0111c24537905908519e05a8df9c6"
+    ],
+    "source_type": "text",
+    "source_section": "II. LITERATURE REVIEW"
+  },
+  {
+    "query": "In LLM-based Bengali text processing, what grammatical error characterizes the \"Kar Fallacy\" when the model generates vowel symbols following consonants?",
+    "relevant_ids": [
+      "d343cf0674c869d7e994b40e49535a87"
+    ],
+    "source_type": "text",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "How do the model size and parameter count of the attention-augmented YOLOv11-Small compare to the CSP-based YOLOv8-Small for Braille dot detection?",
+    "relevant_ids": [
+      "71080c3d75d92d049edd4a8e002bb08b"
+    ],
+    "source_type": "table",
+    "source_section": "For YOLOv11s:"
+  },
+  {
+    "query": "Why does Bangla Braille present an \"Ambiguity Paradox\" that cannot be resolved with a simple deterministic mapping, and how is this resolved in the proposed system?",
+    "relevant_ids": [
+      "312d8030d2ded83d1a14468e98245d45"
+    ],
+    "source_type": "text",
+    "source_section": "I. INTRODUCTION"
+  },
+  {
+    "query": "Why was the traditional human-in-the-loop (HITL) pixel-segmentation preprocessing pipeline ultimately abandoned in favor of a unified YOLO framework?",
+    "relevant_ids": [
+      "0c1d10e4be2d30a2d2394e6a847de897"
+    ],
+    "source_type": "text",
+    "source_section": "A. Tactile-to-Grapheme Mapping Mechanism"
+  },
+  {
+    "query": "What specific recommendations are suggested for improving the naturalness and customization of the Bangla Text-to-Speech component in future iterations?",
+    "relevant_ids": [
+      "efc6c4e3e6d7bb0a9c5838f38bc37474"
+    ],
+    "source_type": "text",
+    "source_section": "A. Recommendations for Future Work"
+  },
+  {
+    "query": "What caused the initial discrepancies in the precision and recall curves during the training of the YOLOv8s model, despite the smooth convergence of its training class and box losses?",
+    "relevant_ids": [
+      "041e4418699727f8d48779afef194d9c"
+    ],
+    "source_type": "text",
+    "source_section": "For YOLOv8s:"
+  },
+  {
+    "query": "How are precision and recall metrics calculated for the large language models evaluated on the daily Bangla conversation dataset?",
+    "relevant_ids": [
+      "738dd61e0fd8b5ac2796b61466d6efc6"
+    ],
+    "source_type": "text",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "Why did the authors select the \"Small\" configuration of the YOLOv11 model instead of the \"Nano\" version or a larger alternative?",
+    "relevant_ids": [
+      "dcb6728d09ebd3ce02a156ec46e3b542"
+    ],
+    "source_type": "text",
+    "source_section": "For YOLOv11s:"
+  },
+  {
+    "query": "What specific graphics processing unit and amount of video memory were employed to handle gradient updates and feature map computations during training?",
+    "relevant_ids": [
+      "d66f4ce42cde9582f6791d20919c80d4"
+    ],
+    "source_type": "text",
+    "source_section": "B. Experimental Setup and Implementation Details"
+  },
+  {
+    "query": "Which specific error metric, commonly associated with speech recognition systems, was used to evaluate the end-to-end accuracy of the translation pipeline?",
+    "relevant_ids": [
+      "10692c1cc0a8c9005fb01fdbdcbe0a8c"
+    ],
+    "source_type": "text",
+    "source_section": "C. Performance Metrics"
+  },
+  {
+    "query": "In the sample evaluations of the Llama3 model, what was the exact output generated when provided with the noisy YOLO input \"আমইবইপ ড ই ।\"?",
+    "relevant_ids": [
+      "d697dc2110d0f11a1829a7374db1a652"
+    ],
+    "source_type": "table",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "How do traditional multi-stage Bengali braille recognition methods suffer when early-stage segmentation errors occur?",
+    "relevant_ids": [
+      "d9d039d169a153269e24e2629854f279"
+    ],
+    "source_type": "text",
+    "source_section": "I. INTRODUCTION"
+  },
+  {
+    "query": "What conversion ratio was applied to translate physical millimeter measurements into pixels for the synthetic dataset generation?",
+    "relevant_ids": [
+      "8d007d2a7b86d2af94b6e29a32393e53"
+    ],
+    "source_type": "text",
+    "source_section": "A. Tactile-to-Grapheme Mapping Mechanism"
+  },
+  {
+    "query": "In the prompt template designed for the Gemini API correction, which character is designated as usually representing the Bengali letter \"জ\"?",
+    "relevant_ids": [
+      "b363494ff1b54a07a2f754749b0445b2"
+    ],
+    "source_type": "text",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "What rule or threshold does the spatial reconstruction system use to determine if a blank space should be inserted between two detected character cells?",
+    "relevant_ids": [
+      "8c34570c305f54e184d02315abea3ff0"
+    ],
+    "source_type": "text",
+    "source_section": "A. Tactile-to-Grapheme Mapping Mechanism"
+  },
+  {
+    "query": "What optimization algorithm and initial learning rate were selected to train the object detection models in this study?",
+    "relevant_ids": [
+      "cfe8d90c8daabd19fd4f9b682f3f6ae5"
+    ],
+    "source_type": "text",
+    "source_section": "B. Experimental Setup and Implementation Details"
+  },
+  {
+    "query": "What specific conversion ratio and design standard were applied to translate physical millimeter measurements into pixels for the synthetic Bangla Braille dataset?",
+    "relevant_ids": [
+      "669f2e652878b77fa7ffdcde7f7022bb"
+    ],
+    "source_type": "text",
+    "source_section": "V. CONCLUSION"
+  },
+  {
+    "query": "What physical limitation restricted the portability of early braille recognition systems that relied on tactile sensors and microlens arrays?",
+    "relevant_ids": [
+      "0dedcea53f8d2340e47d9f4598d126b5"
+    ],
+    "source_type": "text",
+    "source_section": "II. LITERATURE REVIEW"
+  },
+  {
+    "query": "Which architectural feature of the U-Net model enables the retention of multi-scale spatial information during pattern recognition?",
+    "relevant_ids": [
+      "e0d2d798b0b629aec8f109a6db2112a6"
+    ],
+    "source_type": "text",
+    "source_section": "II. LITERATURE REVIEW"
+  },
+  {
+    "query": "In the tactile-to-grapheme mapping algorithm, what threshold condition determines when a space character is added between consecutive horizontal detections?",
+    "relevant_ids": [
+      "a83c6d20f86df7d052d773b010cccfa6"
+    ],
+    "source_type": "text",
+    "source_section": "A. Tactile-to-Grapheme Mapping Mechanism"
+  },
+  {
+    "query": "What are the primary disadvantages of using sequential multi-stage pipelines—such as combining segmentation networks with separate classification heads—compared to single-stage object detectors?",
+    "relevant_ids": [
+      "15088b760fe0fdbe14d1f8fdc26a0ff9"
+    ],
+    "source_type": "text",
+    "source_section": "B. Experimental Setup and Implementation Details"
+  },
+  {
+    "query": "Under aggressive quantization without calibration, why does Llama-3 tend to generate the Bengali character 'ঽ' as a default placeholder for unclear inputs?",
+    "relevant_ids": [
+      "521fd42f087f3c50c99f286e470b876e"
+    ],
+    "source_type": "text",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "According to the performance comparison of various large language models, which specific model configuration achieved the highest accuracy, and what was its average Word Error Rate?",
+    "relevant_ids": [
+      "ae721e13dab94a342bebe0dc5fe0d062"
+    ],
+    "source_type": "table",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "What is the specific mean average precision (mAP@50) value achieved by the YOLOv11s model during the comparative evaluation against the YOLOv8 model?",
+    "relevant_ids": [
+      "690517054eec7f1c9c0e909a946bff55"
+    ],
+    "source_type": "text",
+    "source_section": "V. CONCLUSION"
+  },
+  {
+    "query": "What advantages make Google Text-To-Speech highly suitable for integration into less-precise workflows like Braille-to-Bangla speech conversion?",
+    "relevant_ids": [
+      "0a5d66f5ce277ec5c8b66a790e6ae5f8"
+    ],
+    "source_type": "text",
+    "source_section": "B. Experimental Setup and Implementation Details"
+  },
+  {
+    "query": "What was the exact composition of the 56-image pilot dataset used in the initial feasibility study that evaluated pixel-level semantic segmentation for Braille dots?",
+    "relevant_ids": [
+      "97590b63d7769fcbde23c9945a479d0e"
+    ],
+    "source_type": "text",
+    "source_section": "A. Tactile-to-Grapheme Mapping Mechanism"
+  },
+  {
+    "query": "What issues in the parsed characters from the YOLO output prompted the researchers to conduct a detailed forensic diagnosis of Llama-3?",
+    "relevant_ids": [
+      "90af80e9e4580a41c56a711675287c21"
+    ],
+    "source_type": "text",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "How does the YOLOv11s bounding box regression handle structural variations in Bengali Braille cells to ensure clean token delivery to the subsequent language model?",
+    "relevant_ids": [
+      "ee03d58799898c20f1058c60b3dc90c2"
+    ],
+    "source_type": "text",
+    "source_section": "For YOLOv11s:"
+  },
+  {
+    "query": "In the 6-bit binary vectorization of a 2 x 3 tactile Braille cell, what do the binary values of '1' and '0' mathematically represent?",
+    "relevant_ids": [
+      "22bea608a0c20826e1ca64935680f3c0"
+    ],
+    "source_type": "text",
+    "source_section": "A. Tactile-to-Grapheme Mapping Mechanism"
+  },
+  {
+    "query": "What specific advantages does the YOLOv11s model demonstrate over YOLOv8s regarding the convergence of its loss functions and precision-recall metrics?",
+    "relevant_ids": [
+      "6d7b70dbb49286ff1666813caaf4daf6"
+    ],
+    "source_type": "text",
+    "source_section": "For YOLOv11s:"
+  },
+  {
+    "query": "According to the future recommendations, how would conducting user studies with visually impaired individuals and stakeholders benefit the development of the proposed system?",
+    "relevant_ids": [
+      "db998c665c0fb0967de0eae0a0aae537"
+    ],
+    "source_type": "text",
+    "source_section": "A. Recommendations for Future Work"
+  },
+  {
+    "query": "What is the zero-shot Word Error Rate (WER) of the Gemini 2.5 Flash model when evaluated for cloud-based Braille translation?",
+    "relevant_ids": [
+      "4681e394ca7f24ed01d42f41cae5e05b"
+    ],
+    "source_type": "text",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "Why did the multi-stage Braille recognition pipeline that utilizes U-Net for segmentation underperform compared to the unified YOLO architecture?",
+    "relevant_ids": [
+      "7327e3e6cfc79ef4746a3e52065f03ba"
+    ],
+    "source_type": "text",
+    "source_section": "V. CONCLUSION"
+  },
+  {
+    "query": "What are the exact dimensions, in terms of image count and Braille instances, of the dataset generated in compliance with Library of Congress Specification 800?",
+    "relevant_ids": [
+      "bcd81349618d4bb40171da886d1e4e93"
+    ],
+    "source_type": "text",
+    "source_section": "I. INTRODUCTION"
+  },
+  {
+    "query": "Which specific standard did the authors follow to ensure the physical realism and spatial fidelity of their synthetic Braille training data?",
+    "relevant_ids": [
+      "4322a53e70c06489b290a669114fd5fe"
+    ],
+    "source_type": "text",
+    "source_section": "A. Design Process or Methodology Overview"
+  },
+  {
+    "query": "How does the synthetic data generation system simulate the camera tilt and perspective distortions typical of mobile-captured Braille photos?",
+    "relevant_ids": [
+      "1874371fd93f3e56f7ee73917afa0735"
+    ],
+    "source_type": "text",
+    "source_section": "A. Design Process or Methodology Overview"
+  },
+  {
+    "query": "According to the evaluation results in Table V, what is the worst-performing run's Word Error Rate (WER) and its corresponding accuracy percentage?",
+    "relevant_ids": [
+      "f4faf90e04afe714cd7d74a50618c3ee"
+    ],
+    "source_type": "table",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "What is the Mean Average Precision (mAP@50) achieved by the proposed single-pass YOLO framework in extracting raw Braille characters?",
+    "relevant_ids": [
+      "0fa4c87d8a883f6c24d4697b659efff4"
+    ],
+    "source_type": "text",
+    "source_section": "I. INTRODUCTION"
+  },
+  {
+    "query": "What key variations and formats do the authors recommend incorporating into future Bengali Braille datasets to improve model generalization?",
+    "relevant_ids": [
+      "cadc627cbf2a91a2a1efd8c765c7f552"
+    ],
+    "source_type": "text",
+    "source_section": "A. Recommendations for Future Work"
+  },
+  {
+    "query": "What method is used to associate the object detector's bounding box class outputs with the specific spatial dot arrangements of Bengali Braille?",
+    "relevant_ids": [
+      "3f4e71c181561d1724f8c45c76ac3784"
+    ],
+    "source_type": "text",
+    "source_section": "A. Tactile-to-Grapheme Mapping Mechanism"
+  },
+  {
+    "query": "Once the sequence of Bengali Unicode characters is organized, what specific linguistic processing tasks does the subsequent LLM handle?",
+    "relevant_ids": [
+      "fc7a5091fc14df2cd2cdd2a061b6bac8"
+    ],
+    "source_type": "text",
+    "source_section": "A. Tactile-to-Grapheme Mapping Mechanism"
+  },
+  {
+    "query": "What is the primary reason for routing the character stream from the segmentation stage into a Large Language Model?",
+    "relevant_ids": [
+      "31d33d073384a51971fe5369bb45f6f4"
+    ],
+    "source_type": "text",
+    "source_section": "A. Tactile-to-Grapheme Mapping Mechanism"
+  },
+  {
+    "query": "Which distinct types of errors or phenomena were identified when utilizing various LLMs to reconstruct corrupted Bangla text?",
+    "relevant_ids": [
+      "e5ed058c795db872f398d3b3cad22720"
+    ],
+    "source_type": "text",
+    "source_section": "V. CONCLUSION"
+  },
+  {
+    "query": "What vulnerabilities did conventional image processing techniques (like edge detection and thresholding) exhibit when segmenting Braille before the advent of convolutional neural networks?",
+    "relevant_ids": [
+      "d9a6b70932e85c6243cd0eb34eceec5c"
+    ],
+    "source_type": "text",
+    "source_section": "II. LITERATURE REVIEW"
+  },
+  {
+    "query": "What technology and programming integration are used to turn the reconstructed Bangla text into audible speech for users?",
+    "relevant_ids": [
+      "3c05b5f10d1facb5831cca4bb535922e"
+    ],
+    "source_type": "text",
+    "source_section": "A. Tactile-to-Grapheme Mapping Mechanism"
+  },
+  {
+    "query": "What core aspects of the end-to-end deep learning system did the final recommendations of this Bangla Braille-to-speech study address?",
+    "relevant_ids": [
+      "4b735f6d7748070626653411269ebd78"
+    ],
+    "source_type": "text",
+    "source_section": "V. CONCLUSION"
+  },
+  {
+    "query": "How does employing a single-stage detector like YOLO prevent the compounding errors typically associated with using a distinct segmentation model (such as U-Net) prior to classification?",
+    "relevant_ids": [
+      "6c0a20df202f08a545f25aeeb02cd89e"
+    ],
+    "source_type": "text",
+    "source_section": "Advantages :"
+  },
+  {
+    "query": "How does the unified YOLO framework achieve precise cell boundary isolation and character classification without relying on morphological filtering?",
+    "relevant_ids": [
+      "8f880e852873e31b12d7cae21dd812d8"
+    ],
+    "source_type": "text",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "What rare Sanskrit transliteration symbol, representing vowel elision, is frequently hallucinated in place of standard consonants?",
+    "relevant_ids": [
+      "df96ed6a3b81dbb4d8f2b19634697d14"
+    ],
+    "source_type": "text",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "What technical anomalies, such as token collision, are suspected when the phonetically silent Avagraha character incorrectly replaces 'Ja' or 'Ka'?",
+    "relevant_ids": [
+      "c5a5a0cee83ef5f39a6b1fd22e6a5258"
+    ],
+    "source_type": "text",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "What is the function of the intelligent semantic translation layer powered by a Large Language Model in this system?",
+    "relevant_ids": [
+      "9fb39e0df98a0c6c16fa34c4fa0c301b"
+    ],
+    "source_type": "text",
+    "source_section": "I. INTRODUCTION"
+  },
+  {
+    "query": "Into how many distinct phases is the sequential deep learning pipeline structured to turn Bengali Braille into synthesized audio?",
+    "relevant_ids": [
+      "037ac939dd4bb376dbed46f17c7905f7"
+    ],
+    "source_type": "text",
+    "source_section": "III. METHODOLOGY"
+  },
+  {
+    "query": "What is the word count and English translation of the Bengali ground truth sentence 'আিম বই পিড়' used during artifact analysis?",
+    "relevant_ids": [
+      "4bd0332f3c5a86aa62c80665a4de1433"
+    ],
+    "source_type": "text",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "What is the inference latency of YOLOv8/v11 models that allows them to run efficiently on resource-constrained platforms like Raspberry Pi?",
+    "relevant_ids": [
+      "c396052f7bc54d83b4bb6717a749a2ae"
+    ],
+    "source_type": "text",
+    "source_section": "Advantages :"
+  },
+  {
+    "query": "How does image resolution affect YOLO's accuracy, and what specific problem causes the model's performance to degrade on low-resolution inputs?",
+    "relevant_ids": [
+      "bf39f2fe23cbfd030cb8b466a65544d7"
+    ],
+    "source_type": "text",
+    "source_section": "Limitations:"
+  },
+  {
+    "query": "Why does inserting spaces between separate Unicode characters degrade semantic analysis in Bengali?",
+    "relevant_ids": [
+      "40caec42e12853f3579e704784f4a8cb"
+    ],
+    "source_type": "text",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "How does YOLOv11 manage to accurately differentiate 6-bit configurations within a highly restricted area of 2.5 mm?",
+    "relevant_ids": [
+      "94882ba52c0a23e47cd9c914e920d434"
+    ],
+    "source_type": "text",
+    "source_section": "Advantages :"
+  },
+  {
+    "query": "What computational resources and training duration are necessary to obtain a high mean average precision across diverse classes?",
+    "relevant_ids": [
+      "48429b7a61710c728e5dee834a6df1fe"
+    ],
+    "source_type": "text",
+    "source_section": "Limitations:"
+  },
+  {
+    "query": "What is the purpose of the error correction phase in the mapping mechanism for generating Bengali text?",
+    "relevant_ids": [
+      "ce052bd196bdd91063f30ddb8fa6ba5f"
+    ],
+    "source_type": "text",
+    "source_section": "A. Tactile-to-Grapheme Mapping Mechanism"
+  },
+  {
+    "query": "What specific conversion ratio is used to ensure the dataset accurately reflects standard braille dimensions in pixels?",
+    "relevant_ids": [
+      "6efd1fac409bc5c9076cfe5ba78cd5e6"
+    ],
+    "source_type": "text",
+    "source_section": "A. Design Process or Methodology Overview"
+  },
+  {
+    "query": "Which Bengali characters or character components are prone to being visually confused with the symbol 'ঽ' due to stylistic variations in writing or typography?",
+    "relevant_ids": [
+      "9fb5c56d64c0c9776c73ef9a8adf9cda"
+    ],
+    "source_type": "text",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "What variables comprise the output set representation 'D' in the mapping mechanism?",
+    "relevant_ids": [
+      "2c4ddc44ea129566cb8d741f7a523167"
+    ],
+    "source_type": "text",
+    "source_section": "A. Tactile-to-Grapheme Mapping Mechanism"
+  },
+  {
+    "query": "Which spatial standards guideline from the Library of Congress is utilized to define the high-fidelity standardized dataset example?",
+    "relevant_ids": [
+      "6ebab26f1bec4dd266a8adc50ee4a281"
+    ],
+    "source_type": "text",
+    "source_section": "A. Design Process or Methodology Overview"
+  },
+  {
+    "query": "Which specific large language models were evaluated using the sample datasets from YOLOv8s and YOLOv11s?",
+    "relevant_ids": [
+      "e0aec528fcf9fd6aa503a7c407864fa1"
+    ],
+    "source_type": "text",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "In the tactile-to-grapheme mapping mechanism, what is the role of the semantic correction phase?",
+    "relevant_ids": [
+      "ed663defed1e4cbb19b7805b9af896e6"
+    ],
+    "source_type": "text",
+    "source_section": "A. Tactile-to-Grapheme Mapping Mechanism"
+  },
+  {
+    "query": "To what representation is the character 'c' converted during the third step of the tactile-to-grapheme mapping?",
+    "relevant_ids": [
+      "d01a4b736c5aee79aebf27777d4b0f99"
+    ],
+    "source_type": "text",
+    "source_section": "A. Tactile-to-Grapheme Mapping Mechanism"
+  },
+  {
+    "query": "What sequence of sample numbers, beginning at 5 and ending at 19, is analyzed in the LLM performance section?",
+    "relevant_ids": [
+      "d72f49a278e40f734745ba7a62ad7987"
+    ],
+    "source_type": "text",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "What are the designated radius and spacing parameters, defined in terms of sigma, in the fifth step of the tactile-to-grapheme mapping mechanism?",
+    "relevant_ids": [
+      "d916d5ecf6b6fca9fa437fbf69bea309"
+    ],
+    "source_type": "text",
+    "source_section": "A. Tactile-to-Grapheme Mapping Mechanism"
+  },
+  {
+    "query": "Which table presents the algorithmic mapping matrix used to convert 6-bit binary Braille into Bengali Unicode characters?",
+    "relevant_ids": [
+      "9ba47c59dea4097ca654daf6c4797114"
+    ],
+    "source_type": "text",
+    "source_section": "A. Tactile-to-Grapheme Mapping Mechanism"
+  },
+  {
+    "query": "How does the convergence behavior of the YOLOv11s model differ from the model that experienced an abrupt spike prior to settling?",
+    "relevant_ids": [
+      "d194126d9d4c3e2f883e36664e530d10"
+    ],
+    "source_type": "text",
+    "source_section": "For YOLOv11s:"
+  },
+  {
+    "query": "Which table displays the initial five sample text outputs from YOLO that were identified by Llama3?",
+    "relevant_ids": [
+      "b24f2b5286a347f3e219a789b65b53c2"
+    ],
+    "source_type": "text",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "What is identified as the most prominent and visually obvious error when analyzing the performance of the Large Language Model?",
+    "relevant_ids": [
+      "947901270b4401b9673365fee8f72bcf"
+    ],
+    "source_type": "text",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "Why do conventional pixel-level segmentation networks like U-Net struggle to serve as a robust foundation for Bengali Optical Braille Recognition?",
+    "relevant_ids": [
+      "55c981f06e05ac0a7eb5b6691597ab12"
+    ],
+    "source_type": "figure",
+    "source_section": "I. INTRODUCTION"
+  },
+  {
+    "query": "What major limitation exists in current Braille character recognition systems regarding user accessibility after text is extracted?",
+    "relevant_ids": [
+      "6c95c807c17b255d3c9aae3df991d3ac"
+    ],
+    "source_type": "figure",
+    "source_section": "III. METHODOLOGY"
+  },
+  {
+    "query": "In the tactile-to-grapheme mapping pipeline, which specific tool is utilized in the final phase to transform the extracted text into synthesized audio?",
+    "relevant_ids": [
+      "4c0d4a7714f86a1cdf664f217c71fbe3"
+    ],
+    "source_type": "figure",
+    "source_section": "A. Tactile-to-Grapheme Mapping Mechanism"
+  },
+  {
+    "query": "What specific spatial dimensions for dot diameter and internal spacing are required to align with the Library of Congress Specification 800 standards in the dataset design?",
+    "relevant_ids": [
+      "c4757077ad3d1cc347dd5f97ff2fb320"
+    ],
+    "source_type": "figure",
+    "source_section": "A. Design Process or Methodology Overview"
+  },
+  {
+    "query": "What is the precise mAP@50 score achieved by the YOLOv8s model during the object detection performance evaluation?",
+    "relevant_ids": [
+      "cf69ea76fceabcaaab82cbcf7d5e6dba"
+    ],
+    "source_type": "figure",
+    "source_section": "For YOLOv8s:"
+  },
+  {
+    "query": "Which specific evaluation visualization is used to confirm the minor instances where the YOLOv8s model failed to perform optimally?",
+    "relevant_ids": [
+      "fda83c44c1bcac55f18a08afa04750cd"
+    ],
+    "source_type": "figure",
+    "source_section": "For YOLOv8s:"
+  },
+  {
+    "query": "In what ways does the YOLOv11s model demonstrate superior training stability and metric convergence compared to the YOLOv8s model?",
+    "relevant_ids": [
+      "3596b01b07d4fc684ff36cd44bd28ad3"
+    ],
+    "source_type": "figure",
+    "source_section": "For YOLOv11s:"
+  },
+  {
+    "query": "Which figure depicts the Precision Recall Curve for the older YOLOv8 architecture?",
+    "relevant_ids": [
+      "3596b01b07d4fc684ff36cd44bd28ad3-1"
+    ],
+    "source_type": "figure",
+    "source_section": "For YOLOv11s:"
+  },
+  {
+    "query": "Which figure displays the Confusion Matrix for the YOLOv8 model?",
+    "relevant_ids": [
+      "7d5451bb8273a70afae92fc2970cee3b"
+    ],
+    "source_type": "figure",
+    "source_section": "For YOLOv11s:"
+  },
+  {
+    "query": "Which figure presents the Precision Recall Curve specifically for the YOLOv11 model?",
+    "relevant_ids": [
+      "bca5ad952f12e51bb7aee2dc47664532"
+    ],
+    "source_type": "figure",
+    "source_section": "For YOLOv11s:"
+  },
+  {
+    "query": "Which figure displays the overall Result Graphs for the YOLOv11 model?",
+    "relevant_ids": [
+      "6009981357795ce207ee922f7f72c0c8"
+    ],
+    "source_type": "figure",
+    "source_section": "For YOLOv11s:"
+  },
+  {
+    "query": "What capabilities does the unified YOLO framework demonstrate on a sample test page regarding boundary isolation and character class assignment without needing morphological filtering?",
+    "relevant_ids": [
+      "dfbb0ff5e990021f3f1a4cd09e35af42"
+    ],
+    "source_type": "figure",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "What is the zero-shot Word Error Rate (WER) achieved by Gemini 2.5 Flash that indicates its suitability for cloud-based deployment?",
+    "relevant_ids": [
+      "54b0dbfb43559bc2c3b30fe6daea2c73"
+    ],
+    "source_type": "figure",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  },
+  {
+    "query": "In the Bangla Braille-to-Text prompt corrector, what character does the symbol ' ঽ ' typically represent?",
+    "relevant_ids": [
+      "c60d4c54edf6efaa369b5bd9e0f8535f"
+    ],
+    "source_type": "figure",
+    "source_section": "E. Performance Analysis of Large Language Model (LLM)"
+  }
 ]

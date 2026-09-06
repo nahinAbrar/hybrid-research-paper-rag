@@ -1,0 +1,79 @@
+% ============================================================================
+%  RESULTS TABLES -- generated from an executed run.
+%  Corpus:  1 research paper, 253 parsed chunks
+%  QA set:  100 synthetic queries (eval/generate_qa.py, gemini-3.5-flash),
+%           one gold chunk per query, gold fixed by construction.
+%  Retrieval: BM25 (whitespace tok.) | dense (bge-small-en-v1.5, cosine) |
+%             RRF fusion (candidate depth 60, k=60), top-5 evaluated.
+%  Significance: paired bootstrap + sign-flip permutation, 10k resamples, seed 0.
+%
+%  CAVEAT for the prose: this is a single-paper pilot on a synthetic
+%  development set. Report it as such -- not as the main annotated-corpus result.
+% ============================================================================
+
+% ---------------------------------------------------------------------------
+\begin{table}[t]
+\caption{Retrieval performance on the pilot QA set (100 queries, single paper).
+Hit@5 and Recall@5 coincide because each query has exactly one gold chunk.
+Best per column in \textbf{bold}.}
+\label{tab:retrieval-main}
+\centering
+\begin{tabular}{lcccc}
+\toprule
+Configuration & Hit@5 & Recall@5 & MRR & nDCG@5 \
+\midrule
+BM25 only     & 0.810 & 0.810 & 0.681 & 0.714 \
+Dense only    & 0.810 & 0.810 & 0.675 & 0.709 \
+RRF fusion    & \textbf{0.840} & \textbf{0.840} & \textbf{0.754} & \textbf{0.776} \
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ---------------------------------------------------------------------------
+\begin{table}[t]
+\caption{Paired comparison of RRF fusion against each single retriever.
+$\Delta$ is the mean per-query difference; 95\% CIs are paired bootstrap
+(10k resamples); $p$ is a sign-flip permutation test. Fusion significantly
+improves ranking (MRR, nDCG@5) but not top-5 recall.}
+\label{tab:retrieval-sig}
+\centering
+\begin{tabular}{llcc}
+\toprule
+Metric & Comparison & $\Delta$ (95\% CI) & $p$ \
+\midrule
+\multirow{2}{*}{MRR}
+  & Fusion $-$ BM25   & $+0.073\ [+0.028, +0.122]$ & $0.003$ \
+  & Fusion $-$ Dense  & $+0.080\ [+0.022, +0.138]$ & $0.009$ \
+\midrule
+\multirow{2}{*}{nDCG@5}
+  & Fusion $-$ BM25   & $+0.063\ [+0.022, +0.106]$ & $0.003$ \
+  & Fusion $-$ Dense  & $+0.068\ [+0.015, +0.121]$ & $0.010$ \
+\midrule
+\multirow{2}{*}{Hit@5}
+  & Fusion $-$ BM25   & $+0.030\ [-0.010, +0.070]$ & $0.376$ \
+  & Fusion $-$ Dense  & $+0.030\ [-0.020, +0.080]$ & $0.446$ \
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ---------------------------------------------------------------------------
+\begin{table}[t]
+\caption{MRR broken down by the modality of the gold chunk. Figure-grounded
+queries retrieve at roughly half the MRR of text-grounded ones under every
+configuration, reflecting that figures are reachable only through their
+captions and surrounding text. Cell counts ($n$) are small for non-text
+modalities; these rows are indicative, not conclusive.}
+\label{tab:retrieval-bytype}
+\centering
+\begin{tabular}{lcccc}
+\toprule
+Gold modality & $n$ & BM25 & Dense & RRF fusion \
+\midrule
+Text   & 78 & 0.765 & 0.724 & \textbf{0.832} \
+Table  &  8 & 0.427 & \textbf{0.813} & 0.688 \
+Figure & 14 & \textbf{0.357} & 0.321 & \textbf{0.357} \
+\midrule
+All    & 100 & 0.681 & 0.675 & \textbf{0.754} \
+\bottomrule
+\end{tabular}
+\end{table}

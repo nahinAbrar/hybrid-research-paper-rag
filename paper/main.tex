@@ -1,0 +1,479 @@
+%% ============================================================================
+%%  Trust the Figure, Not the Caption
+%%  Conference paper scaffold -- IEEEtran conference format
+%%
+%%  STATUS: DRAFT SCAFFOLD.
+%%  Sections I-IV and VI contain real prose grounded in the implemented system.
+%%  Section V (Results) is intentionally EMPTY -- fill only from executed runs.
+%%  Every \TODO marker below is a blocker for submission.
+%%
+%%  Compile:  pdflatex main && bibtex main && pdflatex main && pdflatex main
+%% ============================================================================
+
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{url}
+
+% ---- Draft-mode TODO macro. Set \draftmodefalse before submitting; any
+% ---- remaining TODO will then vanish silently, so grep for \TODO first.
+\newif\ifdraftmode
+\draftmodetrue
+\newcommand{\TODO}[1]{\ifdraftmode\textcolor{red}{\textbf{[TODO: #1]}}\fi}
+\newcommand{\NUM}[1]{\ifdraftmode\textcolor{red}{\textbf{[#1]}}\else#1\fi}
+
+\begin{document}
+
+\title{Trust the Figure, Not the Caption: Visual--Textual Consistency
+Checking in Multimodal Retrieval-Augmented Generation over Research Papers}
+
+\author{
+\IEEEauthorblockN{\TODO{author list}}
+\IEEEauthorblockA{\textit{Department of Computer Science and Engineering} \\
+\TODO{institution} \\
+\TODO{emails}}
+}
+
+\maketitle
+
+% ============================================================================
+\begin{abstract}
+Retrieval-augmented generation (RAG) over scientific literature is typically
+evaluated on its ability to locate and reproduce textual evidence. Yet a
+substantial fraction of the claims in a research paper are carried by figures
+and tables, and the caption that describes a figure is not always faithful to
+what the figure shows. We present a hybrid multimodal RAG system for
+question answering over a single research paper, in which figures and tables
+are preserved as first-class retrievable evidence and passed to a multimodal
+language model alongside the text. Building on this system, we introduce a
+\emph{caption-perturbation protocol} that measures whether a multimodal RAG
+system notices when a caption contradicts the figure it describes, and whether
+it resolves the conflict in favour of the visual evidence. We evaluate
+\NUM{$N$} configurations over a corpus of \NUM{$M$} annotated research papers.
+\TODO{one-sentence result statement; write last, from real numbers}
+\end{abstract}
+
+\begin{IEEEkeywords}
+retrieval-augmented generation, multimodal retrieval, hybrid search,
+scientific document understanding, visual question answering, groundedness
+\end{IEEEkeywords}
+
+% ============================================================================
+\section{Introduction}
+
+Question answering over research papers is a natural application of
+retrieval-augmented generation~\cite{lewis2020rag}: a reader arrives with a
+specific question, the relevant evidence is confined to a single document, and
+the cost of a fabricated answer is high. Most deployed systems address this by
+chunking the document's text, retrieving the top-scoring chunks, and
+conditioning a language model on them.
+
+This text-centric view discards a large part of what a research paper actually
+communicates. Results are reported in tables; trends, architectures, and
+ablations are reported in figures. A pipeline that flattens a PDF into a
+sequence of text spans either loses this content entirely or reduces it to the
+caption --- a one- or two-sentence summary written by the authors.
+
+Relying on the caption introduces a failure mode that, to our knowledge, has
+not been measured directly in the RAG literature. A caption is a
+\emph{claim about} a figure, and claims can be wrong. Captions are copy-edited
+late, figures are regenerated after captions are written, and sign errors,
+reversed trends, and stale magnitudes survive review. A RAG system that reads
+only the caption inherits every such error with no means of detecting it. A
+system that reads the figure \emph{and} the caption has, in principle, the
+evidence needed to notice the discrepancy --- but only if it is induced to
+check.
+
+We investigate this directly. Our contributions are:
+
+\begin{enumerate}
+  \item \textbf{A hybrid multimodal RAG pipeline} for single-paper QA
+  (Section~\ref{sec:system}) that parses figures and tables into cropped
+  image evidence with structured provenance, retrieves over text and captions
+  using reciprocal rank fusion of lexical and dense rankings, and links
+  retrieved text back to the figures it references before generation.
+
+  \item \textbf{A caption-perturbation protocol} (Section~\ref{sec:protocol})
+  for measuring visual--textual consistency checking. We generate controlled
+  contradictions between a figure and its caption and measure both the
+  detection rate under perturbation and, critically, the false-alarm rate on
+  unperturbed controls --- a quantity that a detection-only evaluation would
+  hide.
+
+  \item \textbf{An empirical study} over \NUM{$M$} annotated papers
+  isolating the contribution of visual evidence and of explicit
+  consistency-checking instructions.
+  \TODO{finalise claim once Section V exists}
+\end{enumerate}
+
+\TODO{Add a Figure 1: side-by-side of a figure whose caption contradicts it,
+with the system's flagged output. This is the paper's hook and reviewers will
+look for it on page 1.}
+
+% ============================================================================
+\section{Related Work}
+
+\subsection{Hybrid Retrieval}
+Lexical retrieval with BM25~\cite{robertson2009bm25} and dense retrieval with
+learned bi-encoders~\cite{karpukhin2020dpr} have complementary failure modes:
+the former is precise on rare terms and brittle to paraphrase, the latter
+robust to paraphrase and prone to missing exact identifiers. Reciprocal rank
+fusion (RRF)~\cite{cormack2009rrf} combines ranked lists without score
+normalisation or tuned weights, and remains a strong default. We adopt RRF as
+infrastructure rather than as a contribution.
+
+\subsection{Multimodal Document Retrieval}
+Recent work retrieves over rendered document pages directly, bypassing text
+extraction: ColPali~\cite{faysse2024colpali} embeds page images with a
+vision--language model and matches them against queries at the patch level.
+Such approaches sidestep parsing error but forgo the structured provenance
+(section, page, element type) that a parser recovers. Our pipeline takes the
+parsing route, using Docling~\cite{docling2024} for layout analysis, and
+retains figures as separately addressable evidence.
+\TODO{Position against page-level retrieval explicitly --- a reviewer will ask
+why you parse instead of embedding pages. The honest answer is provenance and
+per-element citation; make sure that is argued, not asserted.}
+
+\subsection{Groundedness and Hallucination}
+Evaluation frameworks such as RAGAS~\cite{es2023ragas} score whether a
+generated answer is supported by retrieved context, and hallucination
+surveys~\cite{ji2023hallucination} catalogue the ways generation departs from
+evidence. These frameworks assume the retrieved context is itself correct. The
+setting we study is different: the retrieved context is
+\emph{internally inconsistent}, and the system must adjudicate between two
+conflicting pieces of evidence rather than remain faithful to a single
+consistent one.
+\TODO{Search for prior work on chart--caption factual consistency and on
+scientific claim verification against figures; if a close neighbour exists,
+this subsection must engage it directly rather than claim novelty.}
+
+% ============================================================================
+\section{System Architecture}
+\label{sec:system}
+
+The system processes one paper at a time in four stages: parsing, indexing,
+evidence linking, and multimodal generation.
+
+\subsection{Parsing and Chunking}
+A PDF is converted with Docling~\cite{docling2024} configured to emit images
+for both picture and table elements. We iterate the resulting document tree and
+emit one chunk per element, typed as \texttt{text}, \texttt{table}, or
+\texttt{figure}. Each chunk carries: a unique identifier; the source page
+number; the enclosing section heading, tracked by carrying forward the most
+recent section header encountered during traversal; the element text; and, for
+non-text elements, the caption, the concatenation of the three preceding text
+elements as \texttt{nearby\_text}, and a path to a cropped image.
+
+Images are obtained from Docling's native element rasteriser where available.
+Where it is not, we fall back to cropping the element's bounding box from the
+source PDF with PyMuPDF at 150 DPI. Table elements additionally retain a
+Markdown serialisation of their cell structure, so that a table is represented
+both as searchable text and as an image.
+
+\subsection{Hybrid Retrieval}
+Both retrievers index the same derived string per chunk: the section heading,
+the element text, and the caption, concatenated. This makes figures and tables
+retrievable through their captions and surrounding section context even though
+the retrievers themselves operate on text.
+
+\textbf{Lexical.} A BM25 index~\cite{robertson2009bm25} over whitespace-split,
+lowercased tokens.
+
+\textbf{Dense.} Chunk strings are embedded with
+\texttt{BAAI/bge-small-en-v1.5}~\cite{xiao2023cpack} and stored in a persistent
+ChromaDB collection under cosine distance; retrieval scores are reported as
+$1 - d_{\cos}$.
+
+\textbf{Fusion.} We retrieve the top 60 candidates from each retriever and
+combine them by reciprocal rank fusion~\cite{cormack2009rrf}. For a chunk $c$
+appearing at rank $r_i(c)$ in ranked list $i$,
+\begin{equation}
+\mathrm{RRF}(c) = \sum_{i} \frac{1}{k + r_i(c)}, \qquad k = 60,
+\end{equation}
+with chunks absent from a list contributing nothing. The fused list is sorted
+by $\mathrm{RRF}(c)$ and truncated to the top 5 for generation.
+
+\subsection{Evidence Linking}
+Retrieval returns text chunks, but a question about a trend is answered by the
+figure that the text refers to. After fusion we scan each retrieved text chunk
+for references of the form \emph{Figure~$n$} / \emph{Fig.~$n$} /
+\emph{Table~$n$}, and attach any figure or table chunk whose caption matches
+the referenced ordinal and whose element type agrees. Attached images are
+carried into the generation context alongside the text chunk that referenced
+them.
+
+This mechanism is deliberately simple, and its coverage is bounded by caption
+availability. In a single-paper pilot, parsing yielded 117 chunks --- 97 text,
+16 figure, 4 table --- of which 20 carried a cropped image but only 10 carried
+a caption. Half of the extracted visual elements therefore cannot be reached by
+caption-based linking at all.
+\TODO{Recompute this statistic across the full annotated corpus. Reported here
+from one paper; label it as a pilot number or replace it. Do not let a
+single-document count appear in the final paper without that qualification.}
+
+\subsection{Multimodal Generation}
+The top-ranked chunks and their linked images are assembled into a single
+multimodal prompt. Text chunks are serialised with their index, page number,
+and section, so that the model can cite evidence positionally; images are
+attached as raw image parts. Generation uses a multimodal LLM at temperature
+0.2.
+\TODO{Fix the exact model identifier and version string, and verify it against
+the provider's model list before submission. The identifier currently in the
+codebase should not be copied into the paper unchecked.}
+
+The system instruction directs the model to answer from the provided evidence
+and to cite context indices. It additionally carries the
+\emph{consistency-checking directive} that is the object of study in
+Section~\ref{sec:protocol}: the model is told to compare each figure against
+its caption and surrounding text, to flag any contradiction explicitly, and to
+resolve conflicts in favour of the visual evidence. Section~\ref{sec:protocol}
+treats this directive as an ablatable condition rather than a fixed property of
+the system.
+
+% ============================================================================
+\section{Experimental Design}
+\label{sec:protocol}
+
+\subsection{Corpus and Annotation}
+We assemble a corpus of \NUM{$M$} research papers
+\TODO{state the source venue/arXiv categories and the sampling procedure; a
+convenience sample must be described as one}.
+For each paper, annotators author question--answer pairs and mark the set of
+gold chunks that support each answer.
+
+\textbf{Identifier stability.} Gold annotations reference chunks by
+identifier, so identifiers must be reproducible across re-parses. We assign
+each chunk a content-derived identifier --- a hash over
+(document, page, element type, element text) --- rather than a random one, so
+that an annotation set remains valid when the corpus is re-parsed.
+\TODO{This is a requirement on the implementation, not a description of it.
+The current parser assigns \texttt{uuid4()} per chunk, which invalidates gold
+labels on every re-parse. Change the parser before annotating anything, or the
+annotation effort is wasted.}
+
+\subsection{Retrieval Evaluation}
+We report Recall@$k$, MRR, and nDCG@$k$ over the annotated gold sets for three
+configurations: BM25 alone, dense retrieval alone, and RRF fusion. This
+comparison characterises the retrieval substrate; it is not the paper's claim.
+
+\TODO{The evaluation harness currently substitutes the fusion system's own
+top-ranked output for the gold labels when the annotated identifiers do not
+resolve. Under that substitution the fusion condition scores perfectly by
+construction and the baselines are scored against fusion's output rather than
+against ground truth. No number produced by the harness in its present state
+may enter this paper. Remove the substitution and make unresolvable gold
+identifiers a hard error before running anything.}
+
+\subsection{Caption-Perturbation Protocol}
+The central experiment measures whether the system detects figure--caption
+contradictions.
+
+\textbf{Perturbations.} For each figure with a caption, we construct a
+contradicted variant by a single controlled edit of one of four types:
+\begin{itemize}
+  \item \emph{Trend reversal}: increasing $\leftrightarrow$ decreasing,
+  improves $\leftrightarrow$ degrades.
+  \item \emph{Relational inversion}: outperforms $\leftrightarrow$
+  underperforms, higher $\leftrightarrow$ lower.
+  \item \emph{Magnitude alteration}: a reported value replaced with one
+  inconsistent with the plotted data.
+  \item \emph{Entity substitution}: an axis label, method name, or series
+  identifier swapped for another present in the figure.
+\end{itemize}
+Each perturbed caption remains fluent and plausible in isolation; the
+contradiction is detectable only by consulting the figure.
+\TODO{Perturbations must be human-verified as (a) genuinely contradictory and
+(b) undetectable from text alone. Report inter-annotator agreement on a
+sample. A reviewer will assume the perturbations leak textual cues unless you
+show otherwise.}
+
+\textbf{Conditions.} We cross perturbation (perturbed vs.\ unperturbed
+control) with three system configurations:
+\begin{enumerate}
+  \item \textbf{Text-only}: captions and text in context, no images.
+  \item \textbf{Multimodal, no directive}: images in context, consistency
+  directive removed from the system instruction.
+  \item \textbf{Multimodal + directive}: the full system.
+\end{enumerate}
+Condition~1 establishes that the contradiction is not textually detectable.
+The 1$\rightarrow$2 contrast isolates the contribution of visual evidence; the
+2$\rightarrow$3 contrast isolates the contribution of the instruction.
+
+\textbf{Metrics.}
+\begin{itemize}
+  \item \emph{Detection rate}: proportion of perturbed items for which the
+  system explicitly flags a contradiction.
+  \item \emph{False-alarm rate}: proportion of \emph{unperturbed} controls
+  falsely flagged. A system that flags indiscriminately achieves perfect
+  detection; without this number the detection rate is uninterpretable.
+  \item \emph{Resolution accuracy}: given a question whose answer differs
+  under figure and caption, whether the answer follows the figure.
+\end{itemize}
+\TODO{Specify how flagging is adjudicated --- keyword match on the output is
+too brittle to defend. Either define a rubric and have humans score a sample,
+or use an LLM judge and report its agreement with human scores on that sample.
+Do not report judge scores without that agreement number.}
+
+% ============================================================================
+\section{Results}
+\label{sec:results}
+
+\TODO{THIS SECTION IS EMPTY BY DESIGN. Populate only from executed runs.
+Prerequisites, in order:
+(1) content-derived chunk identifiers in the parser;
+(2) ground-truth substitution removed from the evaluation harness;
+(3) the annotated corpus built;
+(4) the perturbation set constructed and human-verified;
+(5) runs executed and logged.
+Table skeletons below are placeholders --- they contain no data.}
+
+\begin{table}[t]
+\caption{Retrieval performance over the annotated corpus.}
+\label{tab:retrieval}
+\centering
+\begin{tabular}{lccc}
+\toprule
+Configuration & Recall@5 & MRR & nDCG@5 \\
+\midrule
+BM25 only      & \TODO{} & \TODO{} & \TODO{} \\
+Dense only     & \TODO{} & \TODO{} & \TODO{} \\
+RRF fusion     & \TODO{} & \TODO{} & \TODO{} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\caption{Caption-perturbation results. Detection is measured on perturbed
+items, false alarms on unperturbed controls.}
+\label{tab:perturbation}
+\centering
+\begin{tabular}{lccc}
+\toprule
+Configuration & Detection & False alarm & Resolution \\
+\midrule
+Text-only              & \TODO{} & \TODO{} & \TODO{} \\
+Multimodal, no directive & \TODO{} & \TODO{} & \TODO{} \\
+Multimodal + directive & \TODO{} & \TODO{} & \TODO{} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\TODO{Report variance. Single-run numbers from a stochastic decoder are not
+evidence; run each condition multiple times with fixed seeds where available
+and report mean and spread, or state explicitly that decoding is deterministic
+at this temperature and show it.}
+
+% ============================================================================
+\section{Discussion and Limitations}
+
+\TODO{Write after Results. The items below are known in advance and must
+appear regardless of what the numbers show.}
+
+\textbf{Retrieval is text-mediated.} Figures are retrievable only through
+their captions, section headings, and surrounding text; the pipeline never
+embeds image content for retrieval. An uncaptioned figure is effectively
+invisible to the retriever, and in our pilot parse half the extracted visual
+elements were uncaptioned. This bounds every result we report.
+
+\textbf{Evidence linking is regex-based.} Cross-references are matched by
+ordinal against caption strings. References of the form ``the figure above'',
+subfigure references (``Fig.~3(b)''), and figures discussed without explicit
+numbering are not linked.
+
+\textbf{Retrieval component configuration is untuned.} The lexical index uses
+whitespace tokenisation with no stemming or stopword removal. The dense
+retriever omits the asymmetric query instruction prefix that the BGE model
+family is trained to expect, which is known to affect retrieval quality on
+short queries. Both are defensible as defaults but neither is tuned, so the
+retrieval comparison in Table~\ref{tab:retrieval} should be read as a
+characterisation of this pipeline rather than as a general claim about lexical
+versus dense retrieval.
+
+\textbf{Chunk granularity.} One chunk is emitted per parsed document element,
+without merging. Elements are consequently short, which favours lexical
+matching on rare terms and may fragment arguments spanning several elements.
+
+\textbf{Perturbations are synthetic.} Constructed contradictions are a proxy
+for naturally occurring caption errors. They establish capability under a
+controlled contradiction; they do not establish the rate at which such errors
+occur in published work, nor that natural errors resemble synthetic ones.
+\TODO{If feasible, include even a small set of naturally occurring
+caption--figure discrepancies. A handful of real cases substantially
+strengthens the paper's external validity.}
+
+\textbf{Single-document scope.} The system indexes one paper per session.
+Cross-paper retrieval is out of scope.
+
+% ============================================================================
+\section{Conclusion}
+
+\TODO{Write last. State only what the experiments in Section V support. If the
+directive ablation shows no effect, that is a publishable negative result about
+prompt-level consistency checking --- report it as such rather than reframing
+the paper around the retrieval comparison, which is not novel.}
+
+% ============================================================================
+\section*{Reproducibility}
+
+\TODO{State the model identifier and version, embedding model revision,
+retrieval hyperparameters ($k=60$ for both candidate depth and the RRF
+constant), decoding temperature, and the date of API access. Release the
+annotated corpus, the perturbation set, and the evaluation harness. Note that
+results depend on a hosted model whose behaviour may change; the access date
+is not optional.}
+
+% ============================================================================
+% NOTE: Every entry below must be verified against the actual publication
+% before submission -- authors, venue, year, and page numbers. Do not submit
+% a bibliography that has not been checked entry by entry.
+% ============================================================================
+\begin{thebibliography}{00}
+
+\bibitem{lewis2020rag}
+P.~Lewis \emph{et al.}, ``Retrieval-augmented generation for knowledge-intensive
+NLP tasks,'' in \emph{Advances in Neural Information Processing Systems}, 2020.
+
+\bibitem{robertson2009bm25}
+S.~Robertson and H.~Zaragoza, ``The probabilistic relevance framework: BM25 and
+beyond,'' \emph{Foundations and Trends in Information Retrieval}, vol.~3,
+no.~4, pp.~333--389, 2009.
+
+\bibitem{karpukhin2020dpr}
+V.~Karpukhin \emph{et al.}, ``Dense passage retrieval for open-domain question
+answering,'' in \emph{Proc. EMNLP}, 2020.
+
+\bibitem{cormack2009rrf}
+G.~V. Cormack, C.~L.~A. Clarke, and S.~Buettcher, ``Reciprocal rank fusion
+outperforms Condorcet and individual rank learning methods,'' in
+\emph{Proc. SIGIR}, 2009.
+
+\bibitem{xiao2023cpack}
+S.~Xiao \emph{et al.}, ``C-Pack: Packed resources for general Chinese
+embeddings,'' arXiv preprint, 2023.
+
+\bibitem{faysse2024colpali}
+M.~Faysse \emph{et al.}, ``ColPali: Efficient document retrieval with vision
+language models,'' arXiv preprint, 2024.
+
+\bibitem{docling2024}
+Docling Team, ``Docling technical report,'' IBM Research, arXiv preprint, 2024.
+
+\bibitem{es2023ragas}
+S.~Es \emph{et al.}, ``RAGAS: Automated evaluation of retrieval augmented
+generation,'' arXiv preprint, 2023.
+
+\bibitem{ji2023hallucination}
+Z.~Ji \emph{et al.}, ``Survey of hallucination in natural language
+generation,'' \emph{ACM Computing Surveys}, vol.~55, no.~12, pp.~1--38, 2023.
+
+\end{thebibliography}
+
+\end{document}

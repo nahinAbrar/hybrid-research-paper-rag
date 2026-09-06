@@ -3,6 +3,7 @@ Pipeline for parsing a PDF research paper into structured chunks using Docling a
 """
 import uuid
 import json
+import hashlib
 import pymupdf as fitz  # PyMuPDF (modern import)
 import sys
 from typing import List
@@ -61,6 +62,26 @@ def _get_caption_text(item, doc):
     return None
 
 
+def _assign_stable_ids(chunks: List[Chunk]) -> None:
+    """
+    Assigns content-derived IDs so that re-parsing the same PDF reproduces the
+    same chunk IDs. Evaluation gold labels reference chunks by ID, so random
+    IDs would invalidate every annotation on each re-parse.
+
+    Deliberately excludes image_path from the hash basis: image filenames carry
+    a random suffix and would otherwise make IDs unstable again.
+    """
+    seen: dict = {}
+    for c in chunks:
+        basis = "|".join([
+            c.type, str(c.page), c.section or "", c.text or "", c.caption or "",
+        ])
+        base = hashlib.sha1(basis.encode("utf-8")).hexdigest()[:32]
+        n = seen.get(base, 0)
+        seen[base] = n + 1
+        c.id = base if n == 0 else f"{base}-{n}"
+
+
 def parse_pdf_to_chunks(pdf_path: str | Path, output_dir: str | Path) -> List[Chunk]:
     """
     Parses a PDF file and extracts text, tables, and figures into structured chunks.
@@ -105,7 +126,7 @@ def parse_pdf_to_chunks(pdf_path: str | Path, output_dir: str | Path) -> List[Ch
             text_buffer.append(item.text)
             
             chunk = Chunk(
-                id=str(uuid.uuid4()),
+                id="",  # assigned by _assign_stable_ids below
                 type="text",
                 page=item.prov[0].page_no if item.prov else 1,
                 section=current_section,
@@ -117,7 +138,7 @@ def parse_pdf_to_chunks(pdf_path: str | Path, output_dir: str | Path) -> List[Ch
             text_buffer.append(item.text)
             
             chunk = Chunk(
-                id=str(uuid.uuid4()),
+                id="",  # assigned by _assign_stable_ids below
                 type="text",
                 page=item.prov[0].page_no if item.prov else 1,
                 section=current_section,
@@ -145,7 +166,7 @@ def parse_pdf_to_chunks(pdf_path: str | Path, output_dir: str | Path) -> List[Ch
                 image_path = _crop_image_from_pdf(pdf_path_str, page_no, bbox, str(img_path))
 
             chunk = Chunk(
-                id=str(uuid.uuid4()),
+                id="",  # assigned by _assign_stable_ids below
                 type="table",
                 page=page_no,
                 section=current_section,
@@ -175,7 +196,7 @@ def parse_pdf_to_chunks(pdf_path: str | Path, output_dir: str | Path) -> List[Ch
                 image_path = _crop_image_from_pdf(pdf_path_str, page_no, bbox, str(img_path))
 
             chunk = Chunk(
-                id=str(uuid.uuid4()),
+                id="",  # assigned by _assign_stable_ids below
                 type="figure",
                 page=page_no,
                 section=current_section,
@@ -185,6 +206,8 @@ def parse_pdf_to_chunks(pdf_path: str | Path, output_dir: str | Path) -> List[Ch
                 image_path=image_path
             )
             chunks.append(chunk)
+
+    _assign_stable_ids(chunks)
 
     print(f"Successfully extracted {len(chunks)} chunks.")
     return chunks

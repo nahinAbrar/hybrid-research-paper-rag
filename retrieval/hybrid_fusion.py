@@ -6,7 +6,7 @@ from typing import List, Dict, Any
 def reciprocal_rank_fusion(
     bm25_results: List[Dict[str, Any]],
     vector_results: List[Dict[str, Any]],
-    k: int = 60
+    k: int = 60 #RRF constant, typically set to 60
 ) -> List[Dict[str, Any]]:
     """
     Combines results from BM25 and Vector search using Reciprocal Rank Fusion.
