@@ -66,7 +66,7 @@ class GeminiMultimodalClient:
         prompt = f"{context_text}\n\nQuestion: {query}"
         
         # Mix images and text for the multimodal payload
-        contents = images + [prompt]
+        user_message = images + [prompt]
         
         sys_instruction = (
             "You are a highly capable AI research assistant. You are provided with text and visual evidence "
@@ -79,13 +79,14 @@ class GeminiMultimodalClient:
             "Finally, provide clear, accurate answers citing the provided context numbers (e.g., [1], [2])."
         )
 
-        response = self.client.models.generate_content(
+        # Use Chat API instead of models.generate_content to avoid AFC warning
+        chat = self.client.chats.create(
             model=self.model_name,
-            contents=contents,
             config=types.GenerateContentConfig(
                 system_instruction=sys_instruction,
                 temperature=0.2,
             )
         )
+        response = chat.send_message(user_message)
         
         return response.text

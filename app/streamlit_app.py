@@ -7,6 +7,7 @@ import os
 import io
 import json
 import time
+import shutil
 import tempfile
 import streamlit as st
 from pathlib import Path
@@ -17,6 +18,11 @@ from dotenv import load_dotenv
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.append(str(PROJECT_ROOT))
 load_dotenv(PROJECT_ROOT / ".env")
+
+# Set HF_TOKEN for authenticated HuggingFace Hub downloads (faster + higher rate limits)
+hf_token = os.environ.get("HF_TOKEN")
+if hf_token:
+    os.environ["HF_TOKEN"] = hf_token  # ensure it's set for subprocesses too
 
 from retrieval.bm25_index import BM25Retriever
 from retrieval.vector_index import VectorRetriever
@@ -94,6 +100,27 @@ with st.sidebar:
         st.session_state.messages = []
         st.session_state.pipeline_logs = []
         st.session_state.chunk_stats = None
+        
+        # ── Clean up old processed data from previous papers ──
+        # Delete old extracted images
+        old_images_dir = PROJECT_ROOT / "data" / "processed" / "images"
+        if old_images_dir.exists():
+            shutil.rmtree(old_images_dir)
+            old_images_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Delete old chunks.json
+        old_chunks_json = PROJECT_ROOT / "data" / "processed" / "chunks.json"
+        if old_chunks_json.exists():
+            old_chunks_json.unlink()
+        
+        # Note: ChromaDB data is cleared via its API during indexing (not here),
+        # because the PersistentClient holds a file lock on Windows.
+        
+        # Delete old PDF files from papers directory
+        old_papers_dir = PROJECT_ROOT / "data" / "papers"
+        if old_papers_dir.exists():
+            for old_pdf in old_papers_dir.glob("*.pdf"):
+                old_pdf.unlink()
     
     # Process button
     if st.session_state.pipeline_stage == "uploaded":
