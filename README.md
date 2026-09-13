@@ -142,7 +142,7 @@ hybrid-research-paper-rag/
 
 ## Team & Ownership
 
-* **Member 1 (Parsing):** `parsing/` module (PDF -> structured chunks)
-* **Member 2 (Retrieval):** `retrieval/` module (BM25 + vector + hybrid fusion)
-* **Member 3 (Multimodal):** `multimodal/` module (Evidence linking + Gemini calls)
-* **Member 4 (Eval/App):** `eval/` and `app/` modules (Experiments, metrics, Streamlit UI)
+* **Member 1 ~ Samihat (Parsing):** `parsing/` module (PDF -> structured chunks)
+* **Member 2 ~ Rafid Reezwan (Retrieval):** `retrieval/` module (BM25 + vector + hybrid fusion)
+* **Member 3 ~ Nahin (Multimodal):** `multimodal/` module (Evidence linking + Gemini calls) 
+* **Member 4 ~ Rafid Bin (Eval/App):** `eval/` and `app/` modules (Experiments, metrics, Streamlit UI)
