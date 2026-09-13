@@ -76,6 +76,7 @@ pip install -r requirements.txt
 ```
 This opens a web app at `http://localhost:8501`. From there:
 1. **Upload** any research paper PDF using the sidebar
+for convenience, there are two PDF uploaded in PDF directory, download them and upload it to dashboard
 2. **Watch** the pipeline process the paper in real-time (parsing → indexing → evaluation)
 3. **Chat** with the paper — ask questions and view the multimodal answer with retrieved evidence
 
